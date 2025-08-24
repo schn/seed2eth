@@ -48,3 +48,12 @@ func GetAddress(mnemonic, password string, childIdx uint32) (string, error) {
 
 	return crypto.PubkeyToAddress(privateKey.PublicKey).Hex(), nil
 }
+
+func GetAddressFromPrivateKey(privateKey string) (string, error) {
+	ecdsa, err := crypto.HexToECDSA(privateKey)
+	if err != nil {
+		return "", fmt.Errorf("failed to convert to ECDSA: %v", err)
+	}
+
+	return crypto.PubkeyToAddress(ecdsa.PublicKey).Hex(), nil
+}
